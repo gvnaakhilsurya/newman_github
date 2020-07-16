@@ -1,0 +1,515 @@
+{
+	"id": "a3c9c512-1194-4898-bcd6-eaa354b990c2",
+	"name": "Admin",
+	"description": null,
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"dd67605e-076e-4d9c-9667-354916b20011",
+		"fbd17746-0c2d-4f77-9a45-c0b0c5c457ac",
+		"4ac2365b-c9dd-4d1a-9c80-59edac5621b0",
+		"7a8202df-258c-4bf4-818f-a78bf3044b3f",
+		"d16ae9a6-6015-43c1-9d85-65f92ab67ce2",
+		"ec7ae5a9-c2df-4aac-83fa-016ee0439b6d",
+		"c2b24330-fdc2-4385-b4f2-f6562c735fa1",
+		"741ef7bb-641d-4437-9ef3-3d14a6685bce",
+		"e911fd7b-f3d1-403a-aa34-06569a3aeb99",
+		"a4144d7f-3cd4-4ed4-aa4f-a4f6d2be2538",
+		"52e1463d-5de3-4947-8284-c4d85e95b75d",
+		"b3e14ca1-ee55-457d-954b-a67ad4ff3823"
+	],
+	"folders_order": [],
+	"protocolProfileBehavior": {},
+	"folders": [],
+	"requests": [
+		{
+			"id": "4ac2365b-c9dd-4d1a-9c80-59edac5621b0",
+			"name": "Update settings (max values) ",
+			"url": "{{URI}}/admin/updateSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3c4a4082-1e67-426d-a677-ab1ccd1dca5f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8754cef-1b29-4d44-9c98-db3f9e0b9579",
+						"exec": [
+							"pm.test(\"Update Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"maxLoginAttempts\", 8);\r",
+							"//setting random staus\r",
+							"pm.environment.set(\"minCharacters\", 1);\r",
+							"pm.environment.set(\"maxCharacters\", 1);\r",
+							"pm.environment.set(\"expirationTime\", 1);\r",
+							"//setting random staus\r",
+							"pm.environment.set(\"inActivityTime\", 8);\r",
+							"pm.environment.set(\"inviteEmailExpirationTime\", 8);\r",
+							"\r",
+							"pm.environment.set(\"passwordResestEmailExpirationTime\", 8);\r",
+							"pm.environment.set(\"maxOTPAttemptsAllowed\", 8);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\"login\":{\"maxLoginAttempts\":\"{{maxLoginAttempts}}\"},\"password\":{\"minCharacters\":\"{{minCharacters}}\",\"maxCharacters\":\"{{maxCharacters}}\",\"isOneCapitalLetter\":true,\"isOneSmallLetter\":false,\"isOneNumber\":false,\"isAlphanumeric\":false,\"mustHaveSpecialCharacters\":true,\"shouldNotHaveNumbers\":true,\"expirationTime\":\"{{expirationTime}}\"},\"session\":{\"inActivityTime\":\"{{inActivityTime}}\",\"isPasswordRequiredAfterLogout\":false,\"isLogoutForcedAfterInactivity\":true},\"email\":{\"inviteEmailExpirationTime\":\"{{inviteEmailExpirationTime}}\",\"passwordResestEmailExpirationTime\":\"{{passwordResestEmailExpirationTime}}\"},\"twoStepAuthentication\":{\"defaultTwoStepAuthentication\":\"Mobile Number\",\"maxOTPAttemptsAllowed\":\"{{maxOTPAttemptsAllowed}}\"}}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "52e1463d-5de3-4947-8284-c4d85e95b75d",
+			"name": "Update settings (lesser then min values) ",
+			"url": "{{URI}}/admin/updateSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2478b778-06da-4f89-bce5-7d617d9190b8",
+						"exec": [
+							"pm.environment.set(\"maxLoginAttempts\", 0);\r",
+							"pm.environment.set(\"minCharacters\", 0);\r",
+							"pm.environment.set(\"maxCharacters\", 0);\r",
+							"pm.environment.set(\"expirationTime\", 0);\r",
+							"pm.environment.set(\"inActivityTime\", 0);\r",
+							"pm.environment.set(\"inviteEmailExpirationTime\", 0);\r",
+							"pm.environment.set(\"passwordResestEmailExpirationTime\", 0);\r",
+							"pm.environment.set(\"maxOTPAttemptsAllowed\", 0);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8573d0ec-2613-4134-a8f1-7694d4182821",
+						"exec": [
+							"pm.test(\"Less then min values of Admin settings failed as expected\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"It is giving validation error as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Validation error\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\"login\":{\"maxLoginAttempts\":\"{{maxLoginAttempts}}\"},\"password\":{\"minCharacters\":\"{{minCharacters}}\",\"maxCharacters\":\"{{maxCharacters}}\",\"isOneCapitalLetter\":true,\"isOneSmallLetter\":false,\"isOneNumber\":false,\"isAlphanumeric\":false,\"mustHaveSpecialCharacters\":true,\"shouldNotHaveNumbers\":true,\"expirationTime\":\"{{expirationTime}}\"},\"session\":{\"inActivityTime\":\"{{inActivityTime}}\",\"isPasswordRequiredAfterLogout\":false,\"isLogoutForcedAfterInactivity\":true},\"email\":{\"inviteEmailExpirationTime\":\"{{inviteEmailExpirationTime}}\",\"passwordResestEmailExpirationTime\":\"{{passwordResestEmailExpirationTime}}\"},\"twoStepAuthentication\":{\"defaultTwoStepAuthentication\":\"Mobile Number\",\"maxOTPAttemptsAllowed\":\"{{maxOTPAttemptsAllowed}}\"}}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "741ef7bb-641d-4437-9ef3-3d14a6685bce",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "{{URI}}/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a8d4d25-b328-4e03-b459-51d2902ab4c5",
+						"exec": [
+							"pm.test(\"Fetch Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"All the fields value are as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"status\\\":true,\\\"data\\\":{\\\"login\\\":{\\\"maxLoginAttempts\\\":50},\\\"password\\\":{\\\"minCharacters\\\":50,\\\"maxCharacters\\\":50,\\\"isOneCapitalLetter\\\":true,\\\"isOneSmallLetter\\\":false,\\\"isOneNumber\\\":false,\\\"isAlphanumeric\\\":false,\\\"mustHaveSpecialCharacters\\\":true,\\\"shouldNotHaveNumbers\\\":true,\\\"expirationTime\\\":50},\\\"session\\\":{\\\"inActivityTime\\\":50,\\\"isPasswordRequiredAfterLogout\\\":false,\\\"isLogoutForcedAfterInactivity\\\":true},\\\"email\\\":{\\\"inviteEmailExpirationTime\\\":20,\\\"passwordResestEmailExpirationTime\\\":20},\\\"twoStepAuthentication\\\":{\\\"defaultTwoStepAuthentication\\\":\\\"Mobile Number\\\",\\\"maxOTPAttemptsAllowed\\\":50}}}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "7a8202df-258c-4bf4-818f-a78bf3044b3f",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "https://mosymphony-corda-dev.schrocken.io/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "a4144d7f-3cd4-4ed4-aa4f-a4f6d2be2538",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "{{URI}}/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95e66ed3-cc54-4ed3-867f-7f07edddf2d7",
+						"exec": [
+							"pm.test(\"Fetch Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"All the fields value are as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"status\\\":true,\\\"data\\\":{\\\"login\\\":{\\\"maxLoginAttempts\\\":50},\\\"password\\\":{\\\"minCharacters\\\":50,\\\"maxCharacters\\\":50,\\\"isOneCapitalLetter\\\":true,\\\"isOneSmallLetter\\\":false,\\\"isOneNumber\\\":false,\\\"isAlphanumeric\\\":false,\\\"mustHaveSpecialCharacters\\\":true,\\\"shouldNotHaveNumbers\\\":true,\\\"expirationTime\\\":50},\\\"session\\\":{\\\"inActivityTime\\\":50,\\\"isPasswordRequiredAfterLogout\\\":false,\\\"isLogoutForcedAfterInactivity\\\":true},\\\"email\\\":{\\\"inviteEmailExpirationTime\\\":20,\\\"passwordResestEmailExpirationTime\\\":20},\\\"twoStepAuthentication\\\":{\\\"defaultTwoStepAuthentication\\\":\\\"Mobile Number\\\",\\\"maxOTPAttemptsAllowed\\\":50}}}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "b3e14ca1-ee55-457d-954b-a67ad4ff3823",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "{{URI}}/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7601732f-e4b8-4989-a1f5-f4a713037473",
+						"exec": [
+							"pm.test(\"Fetch Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"All the fields value are as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"status\\\":true,\\\"data\\\":{\\\"login\\\":{\\\"maxLoginAttempts\\\":50},\\\"password\\\":{\\\"minCharacters\\\":50,\\\"maxCharacters\\\":50,\\\"isOneCapitalLetter\\\":true,\\\"isOneSmallLetter\\\":false,\\\"isOneNumber\\\":false,\\\"isAlphanumeric\\\":false,\\\"mustHaveSpecialCharacters\\\":true,\\\"shouldNotHaveNumbers\\\":true,\\\"expirationTime\\\":50},\\\"session\\\":{\\\"inActivityTime\\\":50,\\\"isPasswordRequiredAfterLogout\\\":false,\\\"isLogoutForcedAfterInactivity\\\":true},\\\"email\\\":{\\\"inviteEmailExpirationTime\\\":20,\\\"passwordResestEmailExpirationTime\\\":20},\\\"twoStepAuthentication\\\":{\\\"defaultTwoStepAuthentication\\\":\\\"Mobile Number\\\",\\\"maxOTPAttemptsAllowed\\\":50}}}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "c2b24330-fdc2-4385-b4f2-f6562c735fa1",
+			"name": "Update settings (middle values)",
+			"url": "{{URI}}/admin/updateSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9aac70c-acf1-405c-aadd-061c4faccaa2",
+						"exec": [
+							"pm.environment.set(\"maxLoginAttempts\", 50);\r",
+							"pm.environment.set(\"minCharacters\", 50);\r",
+							"pm.environment.set(\"maxCharacters\", 50);\r",
+							"pm.environment.set(\"expirationTime\", 50);\r",
+							"pm.environment.set(\"inActivityTime\", 50);\r",
+							"pm.environment.set(\"inviteEmailExpirationTime\", 20);\r",
+							"pm.environment.set(\"passwordResestEmailExpirationTime\", 20);\r",
+							"pm.environment.set(\"maxOTPAttemptsAllowed\", 50);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5b5e20d-c2f3-48dd-b1e2-d24520d242e6",
+						"exec": [
+							"pm.test(\"Middle values of Admin settings done successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\"login\":{\"maxLoginAttempts\":\"{{maxLoginAttempts}}\"},\"password\":{\"minCharacters\":\"{{minCharacters}}\",\"maxCharacters\":\"{{maxCharacters}}\",\"isOneCapitalLetter\":true,\"isOneSmallLetter\":false,\"isOneNumber\":false,\"isAlphanumeric\":false,\"mustHaveSpecialCharacters\":true,\"shouldNotHaveNumbers\":true,\"expirationTime\":\"{{expirationTime}}\"},\"session\":{\"inActivityTime\":\"{{inActivityTime}}\",\"isPasswordRequiredAfterLogout\":false,\"isLogoutForcedAfterInactivity\":true},\"email\":{\"inviteEmailExpirationTime\":\"{{inviteEmailExpirationTime}}\",\"passwordResestEmailExpirationTime\":\"{{passwordResestEmailExpirationTime}}\"},\"twoStepAuthentication\":{\"defaultTwoStepAuthentication\":\"Mobile Number\",\"maxOTPAttemptsAllowed\":\"{{maxOTPAttemptsAllowed}}\"}}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "d16ae9a6-6015-43c1-9d85-65f92ab67ce2",
+			"name": "Update settings (min values)",
+			"url": "{{URI}}/admin/updateSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "897c72d0-ae6d-4eaf-9ef2-fba771265813",
+						"exec": [
+							"pm.test(\"Min values of Admin settings done successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "585e0c35-2c97-4909-a913-d7ab1ff6d28b",
+						"exec": [
+							"pm.environment.set(\"maxLoginAttempts\", 1);\r",
+							"pm.environment.set(\"minCharacters\", 1);\r",
+							"pm.environment.set(\"maxCharacters\", 1);\r",
+							"pm.environment.set(\"expirationTime\", 1);\r",
+							"pm.environment.set(\"inActivityTime\", 1);\r",
+							"pm.environment.set(\"inviteEmailExpirationTime\", 1);\r",
+							"pm.environment.set(\"passwordResestEmailExpirationTime\", 1);\r",
+							"pm.environment.set(\"maxOTPAttemptsAllowed\", 1);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\"login\":{\"maxLoginAttempts\":\"{{maxLoginAttempts}}\"},\"password\":{\"minCharacters\":\"{{minCharacters}}\",\"maxCharacters\":\"{{maxCharacters}}\",\"isOneCapitalLetter\":true,\"isOneSmallLetter\":false,\"isOneNumber\":false,\"isAlphanumeric\":false,\"mustHaveSpecialCharacters\":true,\"shouldNotHaveNumbers\":true,\"expirationTime\":\"{{expirationTime}}\"},\"session\":{\"inActivityTime\":\"{{inActivityTime}}\",\"isPasswordRequiredAfterLogout\":false,\"isLogoutForcedAfterInactivity\":true},\"email\":{\"inviteEmailExpirationTime\":\"{{inviteEmailExpirationTime}}\",\"passwordResestEmailExpirationTime\":\"{{passwordResestEmailExpirationTime}}\"},\"twoStepAuthentication\":{\"defaultTwoStepAuthentication\":\"Mobile Number\",\"maxOTPAttemptsAllowed\":\"{{maxOTPAttemptsAllowed}}\"}}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "dd67605e-076e-4d9c-9667-354916b20011",
+			"name": "Reset settings",
+			"url": "{{URI}}/admin/resetDefaultSettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "716683a4-1746-417d-b240-ba6f07abfbf4",
+						"exec": [
+							"pm.test(\"Reset Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "e911fd7b-f3d1-403a-aa34-06569a3aeb99",
+			"name": "Update settings (greater then max values)",
+			"url": "{{URI}}/admin/updateSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1012edb8-5cce-4461-933d-4099b1ebe49a",
+						"exec": [
+							"pm.environment.set(\"maxLoginAttempts\", 100);\r",
+							"pm.environment.set(\"minCharacters\", 100);\r",
+							"pm.environment.set(\"maxCharacters\", 100);\r",
+							"pm.environment.set(\"expirationTime\", 366);\r",
+							"pm.environment.set(\"inActivityTime\", 1441);\r",
+							"pm.environment.set(\"inviteEmailExpirationTime\", 49);\r",
+							"pm.environment.set(\"passwordResestEmailExpirationTime\", 49);\r",
+							"pm.environment.set(\"maxOTPAttemptsAllowed\", 100);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c003897c-9d59-48c1-9d5c-18f13f6b9365",
+						"exec": [
+							"pm.test(\"More then max values of Admin settings failed as expected\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"It is giving validation error as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Validation error\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\"login\":{\"maxLoginAttempts\":\"{{maxLoginAttempts}}\"},\"password\":{\"minCharacters\":\"{{minCharacters}}\",\"maxCharacters\":\"{{maxCharacters}}\",\"isOneCapitalLetter\":true,\"isOneSmallLetter\":false,\"isOneNumber\":false,\"isAlphanumeric\":false,\"mustHaveSpecialCharacters\":true,\"shouldNotHaveNumbers\":true,\"expirationTime\":\"{{expirationTime}}\"},\"session\":{\"inActivityTime\":\"{{inActivityTime}}\",\"isPasswordRequiredAfterLogout\":false,\"isLogoutForcedAfterInactivity\":true},\"email\":{\"inviteEmailExpirationTime\":\"{{inviteEmailExpirationTime}}\",\"passwordResestEmailExpirationTime\":\"{{passwordResestEmailExpirationTime}}\"},\"twoStepAuthentication\":{\"defaultTwoStepAuthentication\":\"Mobile Number\",\"maxOTPAttemptsAllowed\":\"{{maxOTPAttemptsAllowed}}\"}}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "ec7ae5a9-c2df-4aac-83fa-016ee0439b6d",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "{{URI}}/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": [],
+			"dataOptions": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7932b06e-7fda-4d02-b933-5800384d128b",
+						"exec": [
+							"pm.test(\"Fetch Admin setting successfully\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"All the fields value are as expected\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"status\\\":true,\\\"data\\\":{\\\"login\\\":{\\\"maxLoginAttempts\\\":1},\\\"password\\\":{\\\"minCharacters\\\":1,\\\"maxCharacters\\\":1,\\\"isOneCapitalLetter\\\":true,\\\"isOneSmallLetter\\\":false,\\\"isOneNumber\\\":false,\\\"isAlphanumeric\\\":false,\\\"mustHaveSpecialCharacters\\\":true,\\\"shouldNotHaveNumbers\\\":true,\\\"expirationTime\\\":1},\\\"session\\\":{\\\"inActivityTime\\\":1,\\\"isPasswordRequiredAfterLogout\\\":false,\\\"isLogoutForcedAfterInactivity\\\":true},\\\"email\\\":{\\\"inviteEmailExpirationTime\\\":1,\\\"passwordResestEmailExpirationTime\\\":1},\\\"twoStepAuthentication\\\":{\\\"defaultTwoStepAuthentication\\\":\\\"Mobile Number\\\",\\\"maxOTPAttemptsAllowed\\\":1}}}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "fbd17746-0c2d-4f77-9a45-c0b0c5c457ac",
+			"name": "Fetch Mosymphony admin settings",
+			"url": "https://mosymphony-corda-dev.schrocken.io/admin/fetchSchrockenMosymphonySettings",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}

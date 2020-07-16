@@ -1,7 +1,7 @@
 postman_job:
-  image: node 10.6.1
+  image: "alpine:3.10"
   script: 
-    -  "npm install newman -g"
+    - "npm install newman -g"
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
   stage: postman
 stages: 

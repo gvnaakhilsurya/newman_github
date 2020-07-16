@@ -1,11 +1,27 @@
-postman_job:
-  image: alpine:3.11
-  script: 
+# postman_job:
+#   image: alpine:3.11
+#   script: 
+#     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
+#   stage: postman
+# stages: 
+#   - some_stages
+#   - postman
+# variables: 
+#   POSTMAN_COLLECTION: postman_collection.json
+#   POSTMAN_ENVIRONMENT: postman_environment.json
+
+
+stages:
+  - postman-test
+
+postman-test:
+  stage: postman-test
+  image: wojciechzurek/newman-ci
+  script:
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
-  stage: postman
-stages: 
-  - some_stages
-  - postman
-variables: 
-  POSTMAN_COLLECTION: postman_collection.json
-  POSTMAN_ENVIRONMENT: postman_environment.json
+  variables: 
+     POSTMAN_COLLECTION: postman_collection.json
+     POSTMAN_ENVIRONMENT: postman_environment.json
+  
+  
+  

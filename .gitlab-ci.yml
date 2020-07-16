@@ -1,6 +1,7 @@
 postman_job:
-  image: wojciechzurek/newman-ci
+  image: node 10.6.1
   script: 
+    -  "npm install newman -g"
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
   stage: postman
 stages: 

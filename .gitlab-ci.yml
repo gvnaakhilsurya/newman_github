@@ -8,4 +8,4 @@ stages:
   - postman
 variables: 
   POSTMAN_COLLECTION: postman_collection.json
-  POSTMAN_ENVIRONMENT: postmab_environment.json
+  POSTMAN_ENVIRONMENT: postman_environment.json

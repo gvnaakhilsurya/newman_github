@@ -1,0 +1,11 @@
+postman_job: 
+  image: wojciechzurek/newman-ci
+  script: 
+    - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
+  stage: postman
+stages: 
+  - some_stages
+  - postman
+variables: 
+  POSTMAN_COLLECTION: postman_collection.json
+  POSTMAN_ENVIRONMENT: postmab_environment.json

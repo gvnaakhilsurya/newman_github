@@ -1,7 +1,13 @@
-postman_job: "image:\"node:10.16.0\""
-script: 
-  - "npm install -g newman"
-  - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
+
+postman_job: 
+  image: "node:10.16.0"
+  script: 
+    - "npm install -g newman"
+    - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
+  stage: postman
+stages: 
+  - some_stages
+  - postman
 variables: 
   POSTMAN_COLLECTION: postman_collection.json
   POSTMAN_ENVIRONMENT: postman_environment.json

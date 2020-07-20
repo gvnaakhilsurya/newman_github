@@ -1,11 +1,8 @@
 postman_job:
-  image: wojciechzurek/newman-ci
-  script: 
+  image: lts-alpine3.12
+  script:
+    - "npm install -g newman" 
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
-  stage: postman
-stages: 
-  - some_stages
-  - postman
 variables: 
   POSTMAN_COLLECTION: postman_collection.json
   POSTMAN_ENVIRONMENT: postman_environment.json

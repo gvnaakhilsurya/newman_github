@@ -3,9 +3,6 @@ postman_job:
   script: 
     - "npm install -g newman"
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
-  stage: postman
-stages: 
-  - postman
 variables: 
   POSTMAN_COLLECTION: postman_collection.json
   POSTMAN_ENVIRONMENT: postman_environment.json

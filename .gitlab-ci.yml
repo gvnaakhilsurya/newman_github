@@ -1,5 +1,5 @@
 postman_job:
-  image: "lts-alpine3.12"
+  image:"node:10.16.0"
   script:
     - "npm install -g newman" 
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"

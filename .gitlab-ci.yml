@@ -3,6 +3,7 @@ postman_job:
   image: "node:10.16.0"
   script: 
     - "npm install -g newman"
+    - "npm install -g newman-reporter-htmlextra"
     - "newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT}"
     - newman run ${POSTMAN_COLLECTION} -e ${POSTMAN_ENVIRONMENT} -r htmlextra
 variables: 
